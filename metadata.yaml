@@ -1,0 +1,6 @@
+name: astrbot_plugin_game_activity
+display_name: 游戏活动日历
+desc: 聚合多款游戏的限时活动起止时间，按会话订阅推送到群聊/私聊，支持新活动、剩余 7 天/3 天/24 小时分级提醒，并提供关键词过滤与管理页
+version: v1.0.0
+author: XinDuKW
+repo: https://github.com/XinDuKW/astrbot_plugin_game_activity

@@ -1,0 +1,218 @@
+{
+  "basic": {
+    "description": "基础设置",
+    "type": "object",
+    "hint": "轮询频率、请求代理与数据缓存等基础配置。",
+    "items": {
+      "poll_interval_minutes": {
+        "description": "活动轮询间隔（分钟）",
+        "type": "int",
+        "default": 30,
+        "hint": "建议不低于 15 分钟。活动时间以天为粒度变化，无需高频轮询；间隔越大对数据源越友好。"
+      },
+      "refresh_on_start": {
+        "description": "启动时立即执行一轮检查",
+        "type": "bool",
+        "default": true,
+        "hint": "插件加载后立刻拉取一次活动数据并推送待提醒内容；关闭后等待第一个轮询周期。"
+      },
+      "request_timeout_seconds": {
+        "description": "单次请求超时（秒）",
+        "type": "int",
+        "default": 20,
+        "hint": "单个数据源请求的超时时间，最小 5 秒。"
+      },
+      "proxy": {
+        "description": "代理地址（留空则不使用代理）",
+        "type": "string",
+        "default": "",
+        "hint": "例如 http://127.0.0.1:7890 或 socks5://127.0.0.1:1080。境外数据源（AKEData）通常需要代理。"
+      },
+      "cache_dir": {
+        "description": "缓存目录（留空使用插件数据目录）",
+        "type": "string",
+        "default": "",
+        "hint": "数据源原始响应会缓存在此目录，网络异常时回退到缓存内容。留空则使用 AstrBot 分配的插件数据目录。"
+      }
+    }
+  },
+  "sources": {
+    "description": "数据源设置",
+    "type": "object",
+    "hint": "控制各数据源的启用状态与接口地址。关闭某个数据源后，其游戏不会出现在订阅选项中。",
+    "items": {
+      "enable_sra": {
+        "description": "启用 SRA 公共 API（米哈游系 / 库洛 / 蔚蓝档案）",
+        "type": "bool",
+        "default": true,
+        "hint": "数据来源：starrailassistant.top 公开接口。支持星穹铁道、原神、绝区零、鸣潮、异环及蔚蓝档案国服/国际服/日服。"
+      },
+      "sra_api_base": {
+        "description": "SRA 公共 API 地址",
+        "type": "string",
+        "default": "https://starrailassistant.top/api/v1/activity",
+        "hint": "末尾斜杠会自动清理。默认：https://starrailassistant.top/api/v1/activity"
+      },
+      "enable_akedata": {
+        "description": "启用 AKEData（明日方舟：终末地）",
+        "type": "bool",
+        "default": true,
+        "hint": "数据来源：data.akedata.wiki，游戏内配置表。需要访问境外站点，建议配置代理。"
+      },
+      "akedata_api_base": {
+        "description": "AKEData 地址",
+        "type": "string",
+        "default": "https://data.akedata.wiki",
+        "hint": "默认：https://data.akedata.wiki"
+      },
+      "akedata_include_gacha_pools": {
+        "description": "终末地：把寻访卡池也作为活动推送",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后卡池会带上「寻访」标签一起推送，可用关键词黑名单过滤掉。"
+      },
+      "enable_prts": {
+        "description": "启用 PRTS（明日方舟）",
+        "type": "bool",
+        "default": true,
+        "hint": "数据来源：prts.wiki。该站点有较严格的访问频率限制，插件会自动限速并使用长缓存。"
+      },
+      "prts_api_base": {
+        "description": "PRTS API 地址",
+        "type": "string",
+        "default": "https://prts.wiki/api.php",
+        "hint": "默认：https://prts.wiki/api.php"
+      },
+      "prts_min_request_interval_seconds": {
+        "description": "PRTS 请求最小间隔（秒）",
+        "type": "int",
+        "default": 20,
+        "hint": "PRTS 的 WAF 会拦截高频请求。低于 10 秒极易被临时封禁，不建议调整。"
+      },
+      "prts_past_days": {
+        "description": "PRTS 保留已结束活动的天数",
+        "type": "int",
+        "default": 7,
+        "hint": "只查询结束时间在此天数之后的活动，用于保留刚结束的活动，避免提醒状态被过早清理。调大可查询更多历史活动。"
+      }
+    }
+  },
+  "reminder": {
+    "description": "提醒策略",
+    "type": "object",
+    "hint": "控制默认的提醒时间点与推送时机。单个会话可用 /活动阈值 覆盖默认阈值。",
+    "items": {
+      "default_thresholds": {
+        "description": "默认剩余时间提醒档位（天，逗号分隔）",
+        "type": "string",
+        "default": "7,3,1",
+        "hint": "活动结束前剩余时间进入某一档位时提醒一次。1 表示剩余不足 24 小时。留空或填「关闭」可关闭倒计时提醒。"
+      },
+      "notify_new_activity": {
+        "description": "推送新活动",
+        "type": "bool",
+        "default": true,
+        "hint": "插件首次发现某个活动时推送一次。已被本会话初始化过的活动不会重复推送。"
+      },
+      "new_activity_lookahead_days": {
+        "description": "新活动提前预告窗口（天）",
+        "type": "int",
+        "default": 45,
+        "hint": "只有开始时间在此窗口内的新活动才会推送，避免把几个月后的活动提前刷出来。设为 0 表示不限制。"
+      },
+      "notify_on_subscribe": {
+        "description": "订阅成功后立即推送一次当前活动概览",
+        "type": "bool",
+        "default": true,
+        "hint": "订阅时把该游戏当前进行中和即将开始的活动汇总发送一次，同时把已有活动标记为已读，避免之后重复推送旧活动。"
+      },
+      "max_new_per_cycle": {
+        "description": "每轮每个会话最多推送的新活动数",
+        "type": "int",
+        "default": 8,
+        "hint": "防止数据源异常或首次运行时刷屏，超出部分按开始时间先后顺序在后续轮次继续推送。"
+      },
+      "remind_only_active": {
+        "description": "只对已经开始的活动中进行倒计时提醒",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后，尚未开始的活动只在「新活动」时推送一次，不参与剩余天数提醒；关闭后未开始的活动也会按结束时间提醒。"
+      },
+      "state_retention_days": {
+        "description": "提醒状态保留天数",
+        "type": "int",
+        "default": 30,
+        "hint": "活动结束超过此天数后清理其提醒记录，避免数据无限增长。"
+      }
+    }
+  },
+  "message_format": {
+    "description": "消息格式",
+    "type": "object",
+    "hint": "控制推送消息的内容组成。",
+    "items": {
+      "include_description": {
+        "description": "附带活动描述",
+        "type": "bool",
+        "default": false,
+        "hint": "开启后推送会带上数据源提供的活动描述，内容可能较长。"
+      },
+      "activity_separator": {
+        "description": "多个活动之间的分隔线",
+        "type": "string",
+        "default": "━━━━━━━━━━━━",
+        "hint": "同一条消息里推送多个活动时，插在相邻活动之间，让边界更明显。留空则只用空行分隔。也可以改成自己喜欢的样式，例如「------」或「════════」。最长 40 个字符。"
+      },
+      "cover_mode": {
+        "description": "活动封面处理方式",
+        "type": "string",
+        "default": "image",
+        "options": ["image", "link", "off"],
+        "labels": ["直接发送图片", "仅附带链接", "不附带封面"],
+        "hint": "image=把封面作为图片直接发出，图片源或适配器不可用时自动退化为文字+链接；link=只发封面链接文本；off=完全不附带封面。"
+      },
+      "cover_compress": {
+        "description": "压缩封面图片后再发送",
+        "type": "bool",
+        "default": true,
+        "hint": "推荐开启。实测封面压缩后只剩原体积的 5%~10%（终末地 12 张 1.6MB → 116KB，星铁 7 张 6.7MB → 502KB），因此能在同样的体积预算内容纳更多图片。关闭后直接按原图 URL 发送。"
+      },
+      "cover_max_width": {
+        "description": "封面压缩后的最大宽度（像素）",
+        "type": "int",
+        "default": 720,
+        "hint": "等比缩放，高度按比例。720 在手机上看活动横幅已经足够清晰；480 体积再小约一半；1080 更清晰但更大。仅在开启压缩时生效。"
+      },
+      "cover_max_total_mb": {
+        "description": "单条消息封面总体积上限（MB）",
+        "type": "int",
+        "default": 5,
+        "hint": "按顺序累加各封面体积，超出上限的封面自动降级为文字链接（不会丢失）。设为 0 表示不限制。开启压缩后通常不会触及这个上限。"
+      },
+      "include_tags": {
+        "description": "附带活动标签",
+        "type": "bool",
+        "default": true,
+        "hint": "例如终末地的「寻访」、PRTS 的活动分类。"
+      },
+      "include_extra_times": {
+        "description": "附带额外时间点",
+        "type": "bool",
+        "default": true,
+        "hint": "例如明日方舟的「兑换结束时间」。"
+      },
+      "single_message_per_game": {
+        "description": "每个游戏每轮合并为一条消息",
+        "type": "bool",
+        "default": true,
+        "hint": "开启后同一游戏本轮所有待提醒活动合并发送；关闭后每个活动单独发送一条。"
+      },
+      "use_forward_node": {
+        "description": "使用合并转发消息发送",
+        "type": "bool",
+        "default": false,
+        "hint": "仅在支持合并转发的平台（如 aiocqhttp）生效，失败时自动回退为普通消息。"
+      }
+    }
+  }
+}

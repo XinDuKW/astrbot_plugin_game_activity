@@ -1,0 +1,8 @@
+{
+  "pages": {
+    "activity": {
+      "title": "Game Activity Subscriptions",
+      "description": "Manage per-session game activity subscriptions, keyword filters and reminder tiers"
+    }
+  }
+}

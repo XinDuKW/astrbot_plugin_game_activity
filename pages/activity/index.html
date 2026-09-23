@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>游戏活动订阅管理</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="title-block">
+          <h1>游戏活动订阅管理</h1>
+          <div class="runtime-status" id="runtime-status" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>正在连接</span>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost-button" id="cycle-button" type="button">
+            立即检查
+          </button>
+          <button
+            class="icon-button"
+            id="refresh-button"
+            type="button"
+            title="刷新数据"
+            aria-label="刷新数据"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+
+      <section class="summary-band" aria-label="订阅概况">
+        <div class="metric">
+          <span class="metric-label">订阅会话</span>
+          <strong id="metric-sessions">-</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">已启用</span>
+          <strong id="metric-enabled">-</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">支持游戏</span>
+          <strong id="metric-games">-</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">上轮提醒</span>
+          <strong id="metric-reminders">-</strong>
+        </div>
+      </section>
+
+      <section
+        class="source-band"
+        id="source-band"
+        aria-label="数据源状态"
+      ></section>
+
+      <p class="error-notice is-hidden" id="error-notice"></p>
+
+      <div class="workspace">
+        <aside class="session-pane">
+          <div class="pane-head">
+            <input
+              id="session-search"
+              type="search"
+              placeholder="搜索群名或会话 ID"
+              aria-label="搜索会话"
+            />
+          </div>
+          <ul class="session-list" id="session-list"></ul>
+        </aside>
+        <main class="detail-pane" id="detail-view"></main>
+      </div>
+    </div>
+
+    <div class="toast is-hidden" id="toast" role="status"></div>
+    <!--
+      脚本必须使用 type="module"：
+      AstrBot 会把 bridge SDK 的脚本标签注入到文档末尾，位置在页面自身脚本
+      之后。模块脚本默认 defer，会等整份文档解析完、SDK 执行之后再运行，届时
+      window.AstrBotPluginPage 才可用；若写成普通经典脚本，会在解析到本行时
+      立即执行，那时 bridge 尚未定义。
+
+      注意：本注释内不要出现文档结束标签的字面量。AstrBot 通过字符串替换定位
+      注入点，注释里先出现的那一个会被当成注入位置，导致 SDK 被塞进注释。
+    -->
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
