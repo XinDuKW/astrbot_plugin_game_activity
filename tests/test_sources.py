@@ -6,8 +6,8 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from astrbot_plugin_game_activity.sources.akedata import AkedataSource
-from astrbot_plugin_game_activity.sources.base import (
+from astrbot_plugin_game_event_due.sources.akedata import AkedataSource
+from astrbot_plugin_game_event_due.sources.base import (
     GAME_TIMEZONE,
     Activity,
     JsonHttpClient,
@@ -18,9 +18,9 @@ from astrbot_plugin_game_activity.sources.base import (
     parse_datetime,
     strip_html,
 )
-from astrbot_plugin_game_activity.sources.prts import PrtsSource, parse_smw_timestamp
-from astrbot_plugin_game_activity.sources.registry import GameRegistry
-from astrbot_plugin_game_activity.sources.sra import SraSource
+from astrbot_plugin_game_event_due.sources.prts import PrtsSource, parse_smw_timestamp
+from astrbot_plugin_game_event_due.sources.registry import GameRegistry
+from astrbot_plugin_game_event_due.sources.sra import SraSource
 
 from helpers import FakeClient
 
@@ -163,7 +163,7 @@ async def test_sra_not_modified_reuses_memory():
     source = SraSource(client)
     first = list(await source.fetch("sr"))
 
-    from astrbot_plugin_game_activity.sources.base import HttpResult
+    from astrbot_plugin_game_event_due.sources.base import HttpResult
 
     async def not_modified(url, **kwargs):
         return HttpResult(not_modified=True)

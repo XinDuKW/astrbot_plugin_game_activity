@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from astrbot_plugin_game_activity.services.message_formatter import (
+from astrbot_plugin_game_event_due.services.message_formatter import (
     COVER_MODE_IMAGE,
     COVER_MODE_LINK,
     COVER_MODE_OFF,
@@ -25,9 +25,9 @@ from astrbot_plugin_game_activity.services.message_formatter import (
     parts_to_text,
     truncate,
 )
-from astrbot_plugin_game_activity.services.reminder_service import ReminderPlan
-from astrbot_plugin_game_activity.sources.base import Activity, GAME_TIMEZONE
-from astrbot_plugin_game_activity.sources.sra import SRA_GAMES
+from astrbot_plugin_game_event_due.services.reminder_service import ReminderPlan
+from astrbot_plugin_game_event_due.sources.base import Activity, GAME_TIMEZONE
+from astrbot_plugin_game_event_due.sources.sra import SRA_GAMES
 
 NOW = datetime(2026, 9, 10, 12, 0, tzinfo=GAME_TIMEZONE)
 GAME = next(game for game in SRA_GAMES if game.game_id == "sr")

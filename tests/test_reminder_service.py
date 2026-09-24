@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from astrbot_plugin_game_activity.services.reminder_service import (
+from astrbot_plugin_game_event_due.services.reminder_service import (
     ActivityNotifyState,
     ReminderPolicy,
     apply_plan,
@@ -19,7 +19,7 @@ from astrbot_plugin_game_activity.services.reminder_service import (
     normalize_thresholds,
     reason_label,
 )
-from astrbot_plugin_game_activity.sources.base import Activity, GAME_TIMEZONE
+from astrbot_plugin_game_event_due.sources.base import Activity, GAME_TIMEZONE
 
 NOW = datetime(2026, 9, 10, 12, 0, tzinfo=GAME_TIMEZONE)
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from astrbot_plugin_game_activity.sources.base import HttpResult
+from astrbot_plugin_game_event_due.sources.base import HttpResult
 
 
 class FakeClient:

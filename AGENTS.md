@@ -159,7 +159,7 @@ Web API 校验枚举值时**不要用 `normalize_cover_mode`**：它会把未知
 
 - 保持现有配置键、默认值与分组结构，除非任务明确要求破坏性调整。
 - 修改公开配置时同步更新 `_conf_schema.json` 与 README。
-- 保持 KV 键（`game_activity_subscriptions_v1` / `game_activity_notify_state_v1`）
+- 保持 KV 键（`game_event_due_subscriptions_v1` / `game_event_due_notify_state_v1`）
   与数据结构，除非提供迁移方案。
 - 缺少 Plugin Pages API 时插件主体仍应能加载（`activity_webui` 导入失败要降级）。
 

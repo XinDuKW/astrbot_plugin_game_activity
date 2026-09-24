@@ -1,6 +1,25 @@
-name: astrbot_plugin_game_activity
+name: astrbot_plugin_game_event_due
 display_name: 游戏活动日历
-desc: 聚合多款游戏的限时活动起止时间，按会话订阅推送到群聊/私聊，支持新活动、剩余 7 天/3 天/24 小时分级提醒，并提供关键词过滤与管理页
-version: v1.0.0
+short_desc: 多款游戏的限时活动日历与到期提醒
+desc: >-
+  聚合多款游戏的限时活动起止时间，按会话订阅推送到群聊 / 私聊。支持新活动推送、
+  剩余 7 天 / 3 天 / 24 小时分级到期提醒、每会话关键词黑白名单过滤、封面图自动
+  压缩发送，并提供 Plugin Pages 管理页。
+
+  数据来源：SRA 公共 API（崩坏：星穹铁道、原神、绝区零、鸣潮、异环、蔚蓝档案
+  国服 / 国际服 / 日服）、AKEData（明日方舟：终末地）、PRTS（明日方舟）。
+version: 1.0.0
 author: XinDuKW
-repo: https://github.com/XinDuKW/astrbot_plugin_game_activity
+repo: https://github.com/XinDuKW/astrbot_plugin_game_event_due
+tags:
+  - 游戏
+  - 活动
+  - 日历
+  - 提醒
+  - 原神
+  - 崩坏星穹铁道
+  - 绝区零
+  - 鸣潮
+  - 明日方舟
+  - 终末地
+category: entertainment

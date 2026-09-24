@@ -2,9 +2,9 @@
 
 两类数据分别存放在独立的 KV 项里：
 
-* ``game_activity_subscriptions_v1``：按会话（UMO）保存订阅的游戏、过滤
+* ``game_event_due_subscriptions_v1``：按会话（UMO）保存订阅的游戏、过滤
   关键词、提醒档位与开关。
-* ``game_activity_notify_state_v1``：按会话保存「某个活动已经推送过哪些
+* ``game_event_due_notify_state_v1``：按会话保存「某个活动已经推送过哪些
   提醒」，用于避免重复推送。
 
 状态项会随活动结束被裁剪，不会无限增长。
@@ -28,8 +28,8 @@ from .reminder_service import (
     normalize_thresholds,
 )
 
-SUBSCRIPTIONS_KEY = "game_activity_subscriptions_v1"
-NOTIFY_STATE_KEY = "game_activity_notify_state_v1"
+SUBSCRIPTIONS_KEY = "game_event_due_subscriptions_v1"
+NOTIFY_STATE_KEY = "game_event_due_notify_state_v1"
 
 MAX_GAMES_PER_SESSION = 32
 MAX_KEYWORDS = 50

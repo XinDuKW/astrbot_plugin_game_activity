@@ -17,7 +17,7 @@ from .services.subscription_service import (
 )
 from .sources import GAME_TIMEZONE
 
-PLUGIN_NAME = "astrbot_plugin_game_activity"
+PLUGIN_NAME = "astrbot_plugin_game_event_due"
 MESSAGE_TYPES = {"GroupMessage", "FriendMessage", "OtherMessage"}
 GROUP_LIST_TIMEOUT_SECONDS = 6
 MAX_UMO_LENGTH = 512

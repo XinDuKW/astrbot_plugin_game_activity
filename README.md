@@ -1,4 +1,4 @@
-# 游戏活动日历（astrbot_plugin_game_activity）
+# 游戏活动日历（astrbot_plugin_game_event_due）
 
 聚合多款游戏的限时活动起止时间，按会话（群聊 / 私聊）订阅推送，支持：
 
@@ -177,7 +177,7 @@
 
 ## 管理页
 
-插件注册了 `/astrbot_plugin_game_activity/*` 接口，配套页面位于 `pages/activity/`，
+插件注册了 `/astrbot_plugin_game_event_due/*` 接口，配套页面位于 `pages/activity/`，
 可在 AstrBot 后台的插件页里打开。可以：
 
 - 查看每个会话订阅了哪些游戏、档位、封面形式与过滤设置；

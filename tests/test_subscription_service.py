@@ -6,16 +6,16 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from astrbot_plugin_game_activity.services.reminder_service import (
+from astrbot_plugin_game_event_due.services.reminder_service import (
     ActivityNotifyState,
     ReminderPolicy,
 )
-from astrbot_plugin_game_activity.services.subscription_service import (
+from astrbot_plugin_game_event_due.services.subscription_service import (
     SubscriptionService,
     normalize_session,
     resolve_policy,
 )
-from astrbot_plugin_game_activity.sources.base import Activity, GAME_TIMEZONE
+from astrbot_plugin_game_event_due.sources.base import Activity, GAME_TIMEZONE
 
 from helpers import FakeKV
 

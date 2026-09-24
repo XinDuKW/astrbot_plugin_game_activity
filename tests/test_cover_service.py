@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from astrbot_plugin_game_activity.services.cover_service import (
+from astrbot_plugin_game_event_due.services.cover_service import (
     UNKNOWN_SIZE_ESTIMATE,
     CoverPayload,
     CoverResolver,
@@ -321,7 +321,7 @@ def test_cover_service_uses_astrbot_logger():
     """日志器必须来自 astrbot.api，不能使用 Python 内置 logging。"""
     import astrbot.api
 
-    from astrbot_plugin_game_activity.services import cover_service
+    from astrbot_plugin_game_event_due.services import cover_service
 
     assert cover_service.logger is astrbot.api.logger
 

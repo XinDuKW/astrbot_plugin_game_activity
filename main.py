@@ -52,7 +52,7 @@ except ModuleNotFoundError as exc:  # pragma: no cover
         raise
     ActivityWebUIController = None  # type: ignore[assignment]
 
-PLUGIN_NAME = "astrbot_plugin_game_activity"
+PLUGIN_NAME = "astrbot_plugin_game_event_due"
 
 USAGE_SUBSCRIBE = (
     "用法: /活动订阅 <游戏名> [游戏名 ...]\n"
