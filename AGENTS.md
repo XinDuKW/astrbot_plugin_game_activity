@@ -155,6 +155,19 @@ AstrBot 返回页面 HTML 时会做两件事（见 `astrbot/dashboard/services/p
 Web API 校验枚举值时**不要用 `normalize_cover_mode`**：它会把未知值静默回退成默认，
 使非法输入被固化成看似合法的覆盖值。应当直接比对 `COVER_MODES` 并返回 400。
 
+## 改名 / 迁移的坑（踩过，务必检查）
+
+AstrBot 的 `cmd_config.json` 里有一项 `plugin_set`（后台「配置 → 插件配置 → 可用插件」），
+它是**「哪些插件允许响应」的白名单**，在唤醒检查阶段就按它过滤处理器
+（`core/pipeline/waking_check/stage.py`）。值为 `["*"]` 表示全部启用。
+
+**插件改名后，如果用户的 `plugin_set` 是显式列表，里面仍会是旧插件名**，新名字不在列表中
+→ 该插件的所有指令**静默失效**：不回复、不报错，而日志里插件显示 `Loading plugin ...`
+且初始化输出一切正常（极易误判成插件 bug）。`plugin_set` 同时被 `core/astr_main_agent.py`
+与 `core/cron/manager.py` 使用，因此 LLM 工具与定时任务也会一起被过滤。
+
+**重命名插件时必须同步提醒用户更新 `plugin_set`**；README 的常见问题里已记录该排查项。
+
 ## 兼容要求
 
 - 保持现有配置键、默认值与分组结构，除非任务明确要求破坏性调整。
