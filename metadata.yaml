@@ -8,7 +8,7 @@ desc: >-
 
   数据来源：SRA 公共 API（崩坏：星穹铁道、原神、绝区零、鸣潮、异环、蔚蓝档案
   国服 / 国际服 / 日服）、AKEData（明日方舟：终末地）、PRTS（明日方舟）。
-version: 1.0.0
+version: 1.0.1
 author: XinDuKW
 repo: https://github.com/XinDuKW/astrbot_plugin_game_event_due
 tags:
