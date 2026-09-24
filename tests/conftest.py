@@ -1,6 +1,7 @@
 """测试初始化。
 
-1. 把插件目录的父目录加入 ``sys.path``，以便按包名导入；
+1. 让插件可以按固定包名导入——**不依赖插件所在目录的名字**（从 GitHub 克隆或解压
+   出来时目录可能叫 ``repo`` / ``astrbot_plugin_game_event_due-main`` 等）；
 2. 未安装 AstrBot 时注入最小存根（只提供 ``astrbot.api.logger``），让脱离运行时的
    单元测试也能导入依赖 logger 的模块。**真实环境不会被覆盖** —— 只有在
    ``import astrbot.api`` 失败时才注入，因此插件在 AstrBot 里跑测试时用的仍是真日志器。
@@ -14,11 +15,20 @@ from pathlib import Path
 
 import pytest
 
+PACKAGE_NAME = "astrbot_plugin_game_event_due"
+
 PLUGIN_DIR = Path(__file__).resolve().parent.parent
 PARENT_DIR = PLUGIN_DIR.parent
 
 if str(PARENT_DIR) not in sys.path:
     sys.path.insert(0, str(PARENT_DIR))
+
+if PLUGIN_DIR.name != PACKAGE_NAME:
+    # 目录名与包名不一致（克隆/解压后的常见情况）：显式注册一个指向真实目录的包对象，
+    # 否则测试里的 `from astrbot_plugin_game_event_due...` 会 ModuleNotFoundError。
+    _package = types.ModuleType(PACKAGE_NAME)
+    _package.__path__ = [str(PLUGIN_DIR)]
+    sys.modules[PACKAGE_NAME] = _package
 
 
 class StubLogger:
